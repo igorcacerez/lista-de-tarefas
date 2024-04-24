@@ -1,0 +1,12 @@
+require('../models/Categoria.js');
+require('../models/Plano.js');
+require('../models/Usuario.js');
+require('../models/Livro.js');
+require('../models/Capitulo.js');
+require('../models/Estante.js');
+require('../models/ContaBanco.js');
+require('../models/HistoricoGanhos.js');
+require('../models/Leitura.js');
+require('../models/Pagamento.js');
+require('../models/Saque.js');
+require('../models/Comentario.js');
