@@ -2,10 +2,12 @@ const jwt = require('jsonwebtoken');
 
 /**
  * Método para criar um token
- * @param {*} obj 
+ * @param {*} obj
+ * @param {string|null} secret
+ * @param {string|null} expires
  * @returns {string} Token
  */
-exports.createToken = async (obj) => {
+exports.createToken = async (obj, secret = null, expires = null) => {
     if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
         throw new Error('Deve ser informado um OBJ para gerar o token.');
     }
@@ -13,13 +15,13 @@ exports.createToken = async (obj) => {
     try {
         // Cria o token
         const token = await jwt.sign(obj,
-            process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRES_IN }
+            secret ? secret : process.env.JWT_SECRET,
+            { expiresIn: expires ? expires : '1d'}
         );
 
         return token;
     } catch (error) {
-        throw new Error('Erro ao gerar o token.');
+        throw new Error('Erro ao gerar o token.' + error);
     }
 };
 

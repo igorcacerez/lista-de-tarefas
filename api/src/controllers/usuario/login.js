@@ -11,17 +11,15 @@ const TokenAdapter = require('../../adapters/token');
  */
 const login = async (req, res) => {
     try {
+
+        // Verify if not information token
+        if (!req.headers?.authorization) {
+            return await res.status(403).json({ error: 'E-mail e senha são obrigatórios.', data: null });
+        }
+
         // Pega os dados do header authorization
         const auth = req.headers.authorization;
 
-        // Verifica se o header foi enviado
-        if (!auth) {
-            res.status(400).json({
-                error: "E-mail e senha são obrigatórios.",
-                data: null
-            });
-            return;
-        }
 
         // Decodifica o header
         const credentials = Buffer.from(auth.replace('Basic ', ''), 'base64').toString('utf-8');

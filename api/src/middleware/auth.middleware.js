@@ -16,7 +16,7 @@ exports.validaLogin = async (req, res, next) => {
     // Verify if not information token
     if (!req.headers?.authorization) {
         // throw Error("Token não informado");
-        return await res.status(403).json({ error: true, msg: 'Token não informado' });
+        return await res.status(403).json({ error: 'Token não informado', data: null});
     }
 
     const bearerHeader = req.headers['authorization'];
@@ -25,13 +25,26 @@ exports.validaLogin = async (req, res, next) => {
 
     // Verify not token bearer
     if (!bearerToken) {
-        return await res.status(403).json({ error: true, msg: 'Token não informado' })
+        return await res.status(403).json({ error: 'Token não informado', data: null })
+    }
+
+    // Verifica se é o modo de teste
+    if (process.env.MOD_TEST && bearerHeader === process.env.TOKEN_TEST) {
+        req.userLogin = {
+            id: 1,
+            email: 'teste@gmail.com',
+            nome: 'Teste'
+        }
+
+        req.token = bearerToken;
+        next()
+        return;
     }
 
     // Verifica se o token é válido e retorna o usuário
     TokenAdapter.verifyToken(bearerToken, async function (err, decoded) {
         if (!decoded || err) {
-            return await res.status(403).json({ error: true, msg: 'Token inválido' })
+            return await res.status(403).json({ error: 'Token inválido', data: null })
         }
 
         req.userLogin = decoded;
