@@ -1,12 +1,31 @@
 const request = require ( 'supertest' );
 const app = require ( '../../app' );
+const UsuarioModel = require ( '../models/Usuario' );
+const sequelize = require('../models/index');
 
 describe('UsuarioController', () => {
+
+    // Antes de cada teste, limpa a tabela de usuários
+    beforeEach(async () => {
+        // Limpar a tabela de usuários
+        await UsuarioModel.destroy({ truncate: true });
+
+        // Reset autoincrement ID
+        await sequelize.query("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'usuarios';");
+
+        // Inserir um usuário para testes
+        await UsuarioModel.create({
+            nome: 'Teste',
+            email: 'teste@gmail.com',
+            senha: '$2a$08$1KojwO/B/DMhihCX3ksbsuS5QteDrA6cf8MKUZraYgHfWMJ6ube.2',
+            email_verificado: 'd1ca18cecaa470117672980092647dfe'
+        });
+    });
 
     describe("Inserção de usuário", () => {
         test("Deve retornar erro de nome obrigatório", async () => {
             const response = await request(app)
-                .post('/usuario/inserir')
+                .post('/usuario/')
                 .send({
                     email: 'teste.nome@gmail.com',
                     senha: '123456',
@@ -19,7 +38,7 @@ describe('UsuarioController', () => {
 
         test("Deve retornar erro de e-mail obrigatório", async () => {
             const response = await request(app)
-                .post('/usuario/inserir')
+                .post('/usuario/')
                 .send({
                     nome: 'Teste Email',
                     senha: '123456',
@@ -32,7 +51,7 @@ describe('UsuarioController', () => {
 
         test("Deve retornar erro de senhas não confirmam", async () => {
             const response = await request(app)
-                .post('/usuario/inserir')
+                .post('/usuario/')
                 .send({
                     nome: 'Teste Email',
                     email: 'teste.nome@gmail.com',
@@ -46,13 +65,11 @@ describe('UsuarioController', () => {
 
         test("Deve inserir um usuário", async () => {
 
-            const gerar_email_unico = Date.now() + '@gmail.com';
-
             const response = await  request(app)
-                .post('/usuario/inserir')
+                .post('/usuario/')
                 .send({
                     nome: 'Teste',
-                    email: gerar_email_unico,
+                    email: 'teste.email@gmail.com',
                     senha: '123456',
                     confsenha: '123456'
                 });
@@ -65,7 +82,7 @@ describe('UsuarioController', () => {
     describe("Atualização de usuário", () => {
         test("Deve retornar erro de Token não informado", async () => {
             const response = await request(app)
-                .put('/usuario/alterar')
+                .put('/usuario/')
                 .send({nome: "Teste Alterado"});
 
             expect(response.status).toBe(403);
@@ -76,7 +93,7 @@ describe('UsuarioController', () => {
             const token = "Bearer 123456";
 
             const response = await request(app)
-                .put('/usuario/alterar')
+                .put('/usuario/')
                 .set('authorization', token)
                 .send({nome: 'Teste Alterado'});
 
@@ -87,7 +104,7 @@ describe('UsuarioController', () => {
         test("Deve retornar erro de senhas não identicas", async () => {
 
             const response = await request(app)
-                .put('/usuario/alterar')
+                .put('/usuario/')
                 .set('authorization', process.env.TOKEN_TEST)
                 .send({
                     nome: 'Teste Alterado',
@@ -101,25 +118,31 @@ describe('UsuarioController', () => {
         });
 
         test("Deve verificar o e-mail", async () => {
+            // Cria um usuário
+            await UsuarioModel.create({
+                nome: 'Teste',
+                email: 'valida_email@gmail.com',
+                senha: '123456',
+                email_verificado: '111111111111111'
+            })
+
             const response = await request(app)
                 .post('/usuario/validar-email')
                 .send({
-                    token: 'd1ca18cecaa470117672980092647dfe'
+                    token: '111111111111111'
                 });
 
             expect(response.status).toBe(200);
             expect(response.body.error).toBe(null);
-            expect(response.body.data.usuario.id).toBe(1);
+            expect(response.body.data.usuario.id).toBe(2);
         });
 
         test("Deve alterar o usuário", async () => {
-
             const response = await request(app)
-                .put('/usuario/alterar')
+                .put('/usuario/')
                 .set('authorization', process.env.TOKEN_TEST)
                 .send({
-                    nome: 'Teste Alterado',
-                    email_verificado: 'd1ca18cecaa470117672980092647dfe'
+                    nome: 'Teste Alterado'
                 });
 
             expect(response.status).toBe(200);
@@ -127,7 +150,6 @@ describe('UsuarioController', () => {
             expect(response.body.data.usuario.nome).toBe('Teste Alterado');
         });
     });
-
 
     describe('Login do usuário', () => {
         test("Deve retornar erro de E-mail e senha obrigatórios", async () => {
@@ -174,8 +196,7 @@ describe('UsuarioController', () => {
         })
 
         test("Deve logar um usuário", async () => {
-
-            const email = 'teste@gmail.com';
+            const email = 'teste@gmail.com'
             const senha = '123456'
 
             // Codificar as credenciais em base64

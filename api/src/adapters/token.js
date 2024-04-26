@@ -29,6 +29,7 @@ exports.createToken = async (obj, secret = null, expires = null) => {
 /**
  * Método para verificar um token
  * @param {*} token
+ * @param {*} func
  * @returns {Promise} Promise
  */ 
 exports.verifyToken = async (token, func) => {

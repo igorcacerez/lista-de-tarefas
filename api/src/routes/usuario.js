@@ -9,8 +9,8 @@ const Usuario = require('../controllers/usuario.controller');
 
 // Rotas de usuário
 router.post('/login', Usuario.login);
-router.post('/inserir', Usuario.inserirUsuario);
 router.post('/validar-email', Usuario.validarEmail);
-router.put('/alterar', authMiddleware.validaLogin, Usuario.alterarUsuario);
+router.post('/', Usuario.inserirUsuario);
+router.put('/', authMiddleware.validaLogin, Usuario.alterarUsuario);
 
 module.exports = router;
