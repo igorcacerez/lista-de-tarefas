@@ -10,8 +10,7 @@ const inserirTag = async (tag, usuario) => {
     try {
         tag.usuario_id = usuario.id;
 
-        const novaTag = await TagModel.create(tag);
-        return novaTag;
+        return await TagModel.create(tag);
 
     } catch (error) {
         throw new Error(error.message);

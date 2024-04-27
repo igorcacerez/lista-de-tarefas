@@ -12,23 +12,13 @@ const Tarefa = db.define('tarefa', {
         type: Sequelize.TEXT,
         allowNull: false,
     },
-    data_cadastro: {
+    data_inicio: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW,
     },
-    data_concluido: {
+    data_fim: {
         type: Sequelize.DATE,
-        allowNull: true,
-        defaultValue: null,
-    },
-    concluido: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-    },
-    tempo_duracao: {
-        type: Sequelize.INTEGER,
         allowNull: true,
         defaultValue: null,
     }

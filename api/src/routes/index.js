@@ -18,4 +18,5 @@ module.exports = (app) => {
     // Require the routes
     app.use('/usuario', require('./usuario'));
     app.use('/tag', require('./tag'));
+    app.use('/tarefa', require('./tarefa'));
 };
