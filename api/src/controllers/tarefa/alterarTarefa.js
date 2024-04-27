@@ -55,7 +55,7 @@ const alterarTarefa = async (req, res) => {
 
     try {
         // Busca a tarefa
-        const tarefaBusca = await TarefaService.getTarefaPorId(id)
+        const tarefaBusca = await TarefaService.getTarefaPorId(id, "*")
 
         // Validações de permissão
         validarPermissaoUsuario(tarefaBusca, usuario);

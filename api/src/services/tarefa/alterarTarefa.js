@@ -1,5 +1,5 @@
 const TarefaModel = require ( '../../models/Tarefa' );
-const {getTarefaPorId} = require("../tarefa.service");
+const getTarefaPorId = require("./getTarefaPorId");
 
 /**
  * Altera uma tarefa no banco de dados.

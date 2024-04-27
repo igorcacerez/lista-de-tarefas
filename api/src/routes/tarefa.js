@@ -10,6 +10,8 @@ const Tarefa = require('../controllers/tarefa.controller');
 // Rotas de usuário
 router.get('/', authMiddleware.validaLogin, Tarefa.listarTarefas);
 router.post('/', authMiddleware.validaLogin, Tarefa.inserirTarefa);
+router.put('/:id', authMiddleware.validaLogin, Tarefa.alterarTarefa);
+router.delete('/:id', authMiddleware.validaLogin, Tarefa.deletarTarefa);
 
 // Tarefa e Tag
 router.delete('/:tarefa_id/tag/:tag_id', authMiddleware.validaLogin, Tarefa.removerTagTarefa);
