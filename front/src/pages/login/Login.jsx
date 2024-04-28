@@ -1,6 +1,4 @@
 import {Container} from "../../components/ui/Container";
-import {useState} from "react";
-import {Input} from "../../components/inputs/Input";
 import {FormLogin} from "./FormLogin";
 import {TxtLoginCadastro} from "../../components/texts/TxtLoginCadastro";
 
