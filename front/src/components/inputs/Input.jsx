@@ -5,6 +5,7 @@ export function Input({
   placeholder,
   value,
   setValue,
+  erro = null,
 }) {
     const handleChange = (event) => {
         setValue(event.target.value)
@@ -20,6 +21,7 @@ export function Input({
                        value={value}
                        onChange={handleChange}
                 />
+                {erro && <small className="text-danger">{erro}</small>}
             </div>
         </div>
     )
