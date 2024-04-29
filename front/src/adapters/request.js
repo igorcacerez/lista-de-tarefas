@@ -1,7 +1,8 @@
 class FetchAdapter {
-    constructor(baseUrl = null, headers = {}) {
+    constructor(baseUrl = null, headers = {}, type = "api") {
         this.baseUrl = baseUrl || "http://localhost:8888";
         this.headers = headers;
+        this.type = type;
 
         // Add content type to headers
         if (!this.headers['Content-Type']) {
@@ -19,14 +20,20 @@ class FetchAdapter {
         const finalOptions = { ...defaultOptions, ...options };
 
         // Constrói a URL final
-        const url = new URL(endpoint, this.baseUrl).href;
+        const url = this.type === "api" ? new URL(endpoint, this.baseUrl).href : `${this.baseUrl}${endpoint}`;
 
         try {
             const response = await fetch(url, finalOptions);
             const data = await response.json();
-            if (data.error) throw new Error(data.error || "Erro desconhecido.");
 
-            return data.data;
+            if (this.type === "api") {
+                if (data.error) throw new Error(data.error || "Erro desconhecido.");
+
+                return data.data;
+            }
+
+            return data;
+
         } catch (error) {
             // Tratamento de erros pode ser mais sofisticado
             console.error("Fetch error: ", error.message);

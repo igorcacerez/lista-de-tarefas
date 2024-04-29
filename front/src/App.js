@@ -7,6 +7,7 @@ import {LayoutProvider} from "./context/LayoutContext";
 import {RotaPrivada} from "./middleware/RotaPrivada";
 import {Atividades} from "./pages/auth/atividades/Atividades";
 import {Tags} from "./pages/auth/tags/Tags";
+import {Calendario} from "./pages/auth/calendario/Calendario";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<RotaPrivada component={Dashboard} />} />
                     <Route path="/atividades" element={<RotaPrivada component={Atividades} />} />
+                    <Route path="/calendario" element={<RotaPrivada component={Calendario} />} />
                     <Route path="/tags" element={<RotaPrivada component={Tags} />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cadastro" element={<Cadastro />} />
