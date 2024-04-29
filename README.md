@@ -11,8 +11,8 @@ Este repositório contém um projeto de Lista de Tarefas desenvolvido com React 
 ## Pré-requisitos
 
 Para executar este projeto, você precisará ter o Node.js e o npm (ou yarn) instalados em sua máquina. As versões recomendadas são:
-- Node.js: 14.x ou superior
-- npm: 6.x ou superior
+- Node.js: 18.x ou superior
+- npm: 9.x ou superior
 
 ## Como Executar
 
@@ -46,7 +46,7 @@ Para executar este projeto, você precisará ter o Node.js e o npm (ou yarn) ins
    npm start
    ```
 
-Após iniciar a aplicação React, ela estará disponível em `http://localhost:3000` e a API em `http://localhost:5000`.
+Após iniciar a aplicação React, ela estará disponível em `http://localhost:3000` e a API em `http://localhost:8888`.
 
 ## Documentação da API
 
