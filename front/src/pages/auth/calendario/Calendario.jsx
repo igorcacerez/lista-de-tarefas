@@ -2,12 +2,13 @@ import {Container} from "../../../components/ui/Container";
 import {useEffect, useState} from "react";
 import {getAtividades} from "../../../service/atividade.service";
 import {buscarFeriados} from "../../../service/feriados.service";
-import FullCalendar from '@fullcalendar/react';
-import Swal from "sweetalert2"; // plugin de visualização de grade de dias
+import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list'; // Para visualização em lista
 import ptLocale from '@fullcalendar/core/locales/pt';
+import {AlertDetails} from "../../../adapters/alert";
+import {Card} from "../../../components/cards/Card";
 
 export function Calendario() {
     const [currentView, setCurrentView] = useState('dayGridMonth');
@@ -19,6 +20,7 @@ export function Calendario() {
             const feriados = await buscarFeriados()
 
             console.log(atividades)
+            console.log(feriados)
 
             // Criar um novo array de eventos a partir das atividades e feriados
             const novosEventos = [
@@ -35,8 +37,8 @@ export function Calendario() {
                 })),
                 ...feriados.map(feriado => ({
                     title: feriado.localName,
-                    start: new Date(feriado.date),
-                    end: new Date(feriado.date),
+                    start: new Date(feriado.date + "T00:00:00"),
+                    end: new Date(feriado.date + "T23:59:59"),
                     color: '#ff9f89',
                     textColor: '#1d1d1d'
                 }))
@@ -56,6 +58,7 @@ export function Calendario() {
 
     function handleEventClick(info) {
 
+        let titulo = info.event.title
         let html = ""
 
         if (info.event.end) {
@@ -76,41 +79,29 @@ export function Calendario() {
             html += `<p><strong>Data:</strong> ${info.event.start?.toLocaleString()}</p>`
         }
 
-        Swal.fire({
-            title: info.event.title,
-            html: html
-        })
+        AlertDetails(titulo, html)
     }
 
     return (
         <Container>
-            <div className={"row"}>
-                <div className="col-12 mb-3">
-                    <div className="card h-100">
-                        <div className="card-header pb-0 p-3">
-                            <h6 className="mb-0">Calendário de Atividades</h6>
-                        </div>
-                        <div className="card-body p-3">
-                            <FullCalendar
-                                plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
-                                initialView={currentView}
-                                headerToolbar={{
-                                    left: 'prev,next today',
-                                    center: 'title',
-                                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                                }}
-                                editable={true}
-                                selectable={true}
-                                selectMirror={true}
-                                dayMaxEvents={true}
-                                events={events}
-                                locale={ptLocale}
-                                eventClick={handleEventClick}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Card>
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, listPlugin]}
+                    initialView={currentView}
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    }}
+                    editable={true}
+                    selectable={true}
+                    selectMirror={true}
+                    dayMaxEvents={true}
+                    events={events}
+                    locale={ptLocale}
+                    eventClick={handleEventClick}
+                />
+            </Card>
         </Container>
     )
 }

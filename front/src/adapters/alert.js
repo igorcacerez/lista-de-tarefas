@@ -15,3 +15,10 @@ export const AlertSuccess = (message) => {
         text: message,
     })
 }
+
+export const AlertDetails = (titulo, html, ) => {
+    Swal.fire({
+        title: titulo,
+        html: html
+    })
+}

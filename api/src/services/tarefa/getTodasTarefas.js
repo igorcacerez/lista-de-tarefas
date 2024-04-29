@@ -1,4 +1,5 @@
 const TarefaModel = require('../../models/Tarefa');
+const {Op} = require("sequelize");
 
 /**
  * Retorna todas as tarefas de um usuário com base em um where
@@ -8,11 +9,20 @@ const TarefaModel = require('../../models/Tarefa');
  */
 const getTodasTarefas = async (usuario_id, where = {}) => {
 
+    let whereBusca = {}
+
     // Adiciona a condição de usuario_id ao where
-    where.usuario_id = usuario_id;
+    whereBusca.usuario_id = usuario_id;
+
+    // Adiciona a condição de data_inicio e data_fim ao where
+    if (where.data_inicio && where.data_fim) {
+        whereBusca['data_inicio'] = {
+            [Op.between]: [where.data_inicio, where.data_fim]
+        }
+    }
 
     return await TarefaModel.findAll({
-        where: where,
+        where: whereBusca,
         include: {
             association: 'tags',
             attributes: ['id', 'nome', 'cor'],

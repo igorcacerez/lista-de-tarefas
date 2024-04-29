@@ -62,3 +62,9 @@
 .form-check:not(.form-switch) .form-check-input[type=checkbox]:after {
     content: "";
 }
+
+.navbar-vertical.navbar-expand-xs .navbar-collapse {
+    display: block;
+    overflow: auto;
+    height: calc(100vh - 220px) !important;
+}

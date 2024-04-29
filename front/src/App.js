@@ -8,6 +8,7 @@ import {RotaPrivada} from "./middleware/RotaPrivada";
 import {Atividades} from "./pages/auth/atividades/Atividades";
 import {Tags} from "./pages/auth/tags/Tags";
 import {Calendario} from "./pages/auth/calendario/Calendario";
+import {Perfil} from "./pages/auth/perfil/Perfil";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/atividades" element={<RotaPrivada component={Atividades} />} />
                     <Route path="/calendario" element={<RotaPrivada component={Calendario} />} />
                     <Route path="/tags" element={<RotaPrivada component={Tags} />} />
+                    <Route path="/perfil" element={<RotaPrivada component={Perfil} />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cadastro" element={<Cadastro />} />
                 </Routes>

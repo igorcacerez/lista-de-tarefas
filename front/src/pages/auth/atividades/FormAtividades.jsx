@@ -7,7 +7,7 @@ import {handleTarefaTag} from "../../../handles/atividades/handleTarefaTag";
 export function FormAtividades({ atividadeEdit = null, setAtividadeEdit, atividades, setAtividades, tags }) {
     const [tituloAtividade, setTituloAtividade] = useState(atividadeEdit ? atividadeEdit.titulo : '');
     const [descricao, setDescricao] = useState(atividadeEdit ? atividadeEdit.descricao : '');
-    const [dataInicio, setDataInicio] = useState(atividadeEdit ? atividadeEdit.data_inicio : new Date().toISOString());
+    const [dataInicio, setDataInicio] = useState(atividadeEdit ? atividadeEdit.data_inicio : formatDate(new Date().toISOString()));
     const [duracao, setDuracao] = useState(atividadeEdit ? atividadeEdit.data_fim : '');
     const [tagsAtividade, setTagsAtividade] = useState( []);
     const [id, setId] = useState(atividadeEdit ? atividadeEdit.id : null);
@@ -18,12 +18,15 @@ export function FormAtividades({ atividadeEdit = null, setAtividadeEdit, ativida
         if (atividadeEdit) {
             setTituloAtividade(atividadeEdit.titulo);
             setDescricao(atividadeEdit.descricao);
-            setDataInicio(atividadeEdit.data_inicio);
             setDuracao(getDiferencaEmHoras(atividadeEdit.data_inicio, atividadeEdit.data_fim))
             setId(atividadeEdit.id);
 
             // Quando tagsAtividade é uma lista de objetos trnasformamos em uma lista de IDs
             setTagsAtividade(atividadeEdit.tags.map(tag => tag.id));
+
+            // Converte a data para o formato de dd/mm/yyyy hh:mm
+            const dataInicioConvertida = formatDate(atividadeEdit.data_inicio);
+            setDataInicio(dataInicioConvertida);
         }
 
     }, [atividadeEdit])
@@ -31,10 +34,14 @@ export function FormAtividades({ atividadeEdit = null, setAtividadeEdit, ativida
     const clearFields = () => {
         setTituloAtividade('');
         setDescricao('');
-        setDataInicio(new Date().toISOString());
         setDuracao('');
         setTagsAtividade([]);
         setId(null);
+
+        let dataAtual = new Date().toISOString();
+        dataAtual = formatDate(dataAtual)
+        setDataInicio(dataAtual);
+
     }
 
     const realizarAcao = async () => {
@@ -69,6 +76,17 @@ export function FormAtividades({ atividadeEdit = null, setAtividadeEdit, ativida
         // Diferença
         const diferenca = dataFimConvertida - dataInicioConvertida;
         return (diferenca / 1000 / 60 / 60); // ms -> s -> min -> h
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth() retorna mês de 0-11
+        const year = date.getFullYear();
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
     }
 
     return (

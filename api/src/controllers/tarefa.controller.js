@@ -2,6 +2,7 @@ const inserirTarefa = require('./tarefa/inserirTarefa');
 const listarTarefas = require('./tarefa/listarTarefas');
 const alterarTarefa = require('./tarefa/alterarTarefa');
 const deletarTarefa = require('./tarefa/deletarTarefa');
+const filtrarTarefaData = require('./tarefa/filtrarTarefaData');
 
 // Tarefa e Tag
 const removerTagTarefa = require('./tag_tarefa/removerTagTarefa');
@@ -13,5 +14,6 @@ module.exports = {
     removerTagTarefa,
     adicionarTagTarefa,
     alterarTarefa,
-    deletarTarefa
+    deletarTarefa,
+    filtrarTarefaData
 }

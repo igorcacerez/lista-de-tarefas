@@ -69,3 +69,24 @@ export const cadastrar = async ({nome, email, senha, confsenha}) => {
     const api = new FetchAdapter()
     return await api.post("/usuario", {nome, email, senha, confsenha})
 }
+
+/**
+ * Método para alterar os dados do usuário
+ * @param dadosAltera
+ * @returns {Promise<void>}
+ */
+export const alterarUsuario = async (dadosAltera) => {
+    const usuario = await getUserLocal();
+    if (!usuario) throw new Error('Usuário não encontrado.');
+
+    const api = new FetchAdapter()
+    api.setBearerToken(usuario.token);
+
+    const result = await api.put("/usuario", dadosAltera)
+    let novoUsuario = result.usuario;
+    novoUsuario.token = usuario.token;
+
+    UserSession.setUserData(novoUsuario);
+
+    return novoUsuario;
+}
