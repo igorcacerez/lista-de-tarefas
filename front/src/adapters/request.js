@@ -34,6 +34,10 @@ class FetchAdapter {
         }
     }
 
+    setBearerToken(token) {
+        this.headers['Authorization'] = `Bearer ${token}`;
+    }
+
     get(endpoint, options = {}) {
         return this.request(endpoint, { ...options, method: 'GET' });
     }
@@ -42,7 +46,6 @@ class FetchAdapter {
         return this.request(endpoint, {
             ...options,
             method: 'POST',
-            headers: { ...options.headers },
             body: JSON.stringify(body)
         });
     }
@@ -51,7 +54,6 @@ class FetchAdapter {
         return this.request(endpoint, {
             ...options,
             method: 'PUT',
-            headers: { ...options.headers },
             body: JSON.stringify(body)
         });
 

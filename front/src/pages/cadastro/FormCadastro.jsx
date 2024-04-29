@@ -1,12 +1,21 @@
 import {Input} from "../../components/inputs/Input";
 import {useState} from "react";
 import {ButtonGradient} from "../../components/buttons/ButtonGradient";
+import {handleCadastro} from "../../handles/usuario/handleCadastro";
+import {useNavigate} from "react-router-dom";
 
 export function FormCadastro() {
     const [nome, setNome] = useState("")
     const [email, setEmail] = useState("")
     const [senha, setSenha] = useState("")
     const [confsenha, setConfSenha] = useState("")
+
+    const navigate = useNavigate()
+
+    const cadastrar = async () => {
+        let dadosUsuario = {nome, email, senha, confsenha}
+        await handleCadastro(dadosUsuario, navigate)
+    }
 
     return (
         <div className="card-body">
@@ -35,7 +44,7 @@ export function FormCadastro() {
                        erro={senha !== confsenha ? "As senhas não conferem." : null}
                        placeholder={"Informe sua senha."}/>
 
-                <ButtonGradient>
+                <ButtonGradient onClick={cadastrar}>
                     Cadastrar
                 </ButtonGradient>
             </form>

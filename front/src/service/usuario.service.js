@@ -52,3 +52,20 @@ export async function getUserLocal() {
  * @returns {Promise<void>}
  */
 export const logout = async ()=> UserSession.clearUserData();
+
+
+/**
+ * Método para cadastrar um novo usuário no sistema
+ * @param nome
+ * @param email
+ * @param senha
+ * @param confsenha
+ * @returns {Promise<*|undefined>}
+ */
+export const cadastrar = async ({nome, email, senha, confsenha}) => {
+    const usuario = await getUserLocal();
+    if (usuario) throw new Error('Você já está logado no sistema.');
+
+    const api = new FetchAdapter()
+    return await api.post("/usuario", {nome, email, senha, confsenha})
+}

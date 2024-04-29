@@ -1,8 +1,13 @@
 import {Icons} from "../../adapters/Icons";
 import {Link} from "react-router-dom";
 import {Breadcrumb} from "./Breadcrumb";
+import {useContext} from "react";
+import {UsuarioContext} from "../../context/UsuarioContext";
 
 export function NavTopo({abrirFecharMenu}) {
+    const {getUsuario} = useContext(UsuarioContext);
+    const usuario = getUsuario();
+
     return (
         <nav className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
             <div className="container-fluid py-1 px-3">
@@ -13,7 +18,7 @@ export function NavTopo({abrirFecharMenu}) {
                         <li className="nav-item d-flex align-items-center">
                             <Link to={"/perfil"} className="nav-link text-body font-weight-bold px-0">
                                 <Icons icon={"faUser"} className={"me-sm-1"} />
-                                <span className="d-sm-inline d-none">Olá, Igor</span>
+                                <span className="d-sm-inline d-none">Olá, {usuario.nome}</span>
                             </Link>
                         </li>
 
