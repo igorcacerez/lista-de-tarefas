@@ -1,6 +1,7 @@
 import {useEffect} from "react";
 import {handleBuscarAtividades} from "../../../handles/atividades/handleBuscarAtividades";
 import {handleDeletarAtividade} from "../../../handles/atividades/handleDeletarAtividade";
+import {convertDate} from "../../../helpers/dates";
 
 export function ListaAtividades({atividades, setAtividades, setAtividadeEdit}) {
 
@@ -11,11 +12,6 @@ export function ListaAtividades({atividades, setAtividades, setAtividadeEdit}) {
 
         buscarAtividades();
     }, [])
-
-    const convertDate = (date) => {
-        const data = new Date(date);
-        return `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
-    }
 
     function carregaTabela() {
         return (
@@ -50,7 +46,7 @@ export function ListaAtividades({atividades, setAtividades, setAtividadeEdit}) {
                                 <div className="d-flex px-2 py-1">
                                     <div>
                                         <div className="d-flex flex-column justify-content-center">
-                                            <h6 className="mb-0 text-sm">{atividade.tags.map(tag => tag.nome).join(', ')}</h6>
+                                            <h6 className="mb-0 text-sm">{atividade.tags?.map(tag => tag.nome).join(', ')}</h6>
                                         </div>
                                     </div>
                                 </div>

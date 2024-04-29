@@ -57,3 +57,19 @@ export async function desvincularTagAtividade(atividadeId, tagId) {
 
     return await api.delete(`/tarefa/${atividadeId}/tag/${tagId}`)
 }
+
+export async function getAtividadesDoDia() {
+    const usuario = await getUserLocal()
+
+    // Data inicio e fim
+    const data = new Date()
+    const inicio = new Date(data.getFullYear(), data.getMonth(), data.getDate())
+    const fim = new Date(data.getFullYear(), data.getMonth(), data.getDate() + 1)
+
+    const api = await new FetchAdapter()
+    api.setBearerToken(usuario.token)
+
+    let url = `/tarefa/data?inicio=${inicio.toISOString()}&fim=${fim.toISOString()}`
+
+    return await api.get(url)
+}

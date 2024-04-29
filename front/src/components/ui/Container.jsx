@@ -30,7 +30,7 @@ export function Container({login = false, children}) {
         <div className={classeMenu}>
             <NavLateral abrirFecharMenu={abrirFecharMenu} />
 
-            <main className="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+            <main className="main-content position-relative h-100 border-radius-lg ">
                 <NavTopo abrirFecharMenu={abrirFecharMenu} />
 
                 <div className="container-fluid py-4">
