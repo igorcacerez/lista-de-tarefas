@@ -4,6 +4,7 @@ import {Cadastro} from "./pages/cadastro/Cadastro";
 import {Dashboard} from "./pages/auth/dashboard/Dashboard";
 import {UsuarioProvider} from "./context/UsuarioContext";
 import {LayoutProvider} from "./context/LayoutContext";
+import {RotaPrivada} from "./middleware/RotaPrivada";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <LayoutProvider>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/" element={<RotaPrivada component={Dashboard} />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/cadastro" element={<Cadastro />} />
                 </Routes>

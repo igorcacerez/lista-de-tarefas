@@ -1,8 +1,10 @@
 import {Icons} from "../../adapters/Icons";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {handleLogout} from "../../handles/usuario/handleLogout";
 
 export function ItensMenu({link = null, icon, texto}) {
     const location = useLocation()
+    const navigate = useNavigate()
 
     if (!link) {
         return (
@@ -15,7 +17,7 @@ export function ItensMenu({link = null, icon, texto}) {
     return (
         <li className="nav-item">
             {link === "/logout" ? (
-                <div className={"nav-link cursor-pointer"}>
+                <div className={"nav-link cursor-pointer"} onClick={() => handleLogout(navigate)}>
                     <div
                         className="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                         <Icons icon={icon} color={"#3A416F"} />
