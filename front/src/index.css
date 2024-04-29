@@ -4,6 +4,23 @@
     font-family: "Roboto", sans-serif !important;
 }
 
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #cc0505;
+    --bs-btn-border-color: #cc0505;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #fa6571;
+    --bs-btn-hover-border-color: #fa6571;
+    --bs-btn-focus-shadow-rgb: 211, 48, 173;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #fa6571;
+    --bs-btn-active-border-color: #fa6571;
+    --bs-btn-active-shadow: none;
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #cc0505;
+    --bs-btn-disabled-border-color: #cc0505;
+}
+
 .bg-gradient-info,
 .text-gradient.text-info,
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon{
@@ -31,3 +48,17 @@
 
 .g-sidenav-pinned .btn-fecha-menu {display: block;}
 
+.btn-primary:hover,
+.btn.bg-gradient-primary:hover {
+    background-color: #fa6571;
+    border-color: #fa6571;
+}
+
+.icone-cor {
+    width: 40px;
+    height: 20px;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=checkbox]:after {
+    content: "";
+}

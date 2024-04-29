@@ -1,5 +1,5 @@
 const TarefaService = require('../../services/tarefa.service');
-const {validarData, addTempoDeDuracao} = require("../../utils/dates");
+const {validarData, addTempoDeDuracao, getLocalTimestamp} = require("../../utils/dates");
 
 /**
  * Valida se os campos obrigatórios da tarefa foram preenchidos.
@@ -19,7 +19,9 @@ const validarCampos = (obj) => {
 
     // Valida a data de início
     if (!validarData(obj.data_inicio)) throw new Error('A data de início é inválida.');
-    if (new Date(obj.data_inicio) < new Date()) {
+
+    // Valida se a data e hora de início é maior que a data atual
+    if (new Date(obj.data_inicio).getTime() < getLocalTimestamp()) {
         throw new Error('A data de início deve ser maior que a data atual.');
     }
 

@@ -26,15 +26,21 @@ export function NavLateral({abrirFecharMenu}) {
                     <ItensMenu texto={"Gerenciamento"} />
 
                     <ItensMenu
-                        link={"/calendario"}
-                        icon={"faCalendarDays"}
-                        texto={"Calendário"}
-                    />
-
-                    <ItensMenu
                         link={"/atividades"}
                         icon={"faListCheck"}
                         texto={"Atividades"}
+                    />
+
+                    <ItensMenu
+                        link={"/tags"}
+                        icon={"faTags"}
+                        texto={"Tags"}
+                    />
+
+                    <ItensMenu
+                        link={"/calendario"}
+                        icon={"faCalendarDays"}
+                        texto={"Calendário"}
                     />
 
                     <ItensMenu

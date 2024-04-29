@@ -11,7 +11,8 @@ export function Breadcrumb() {
         "/": "Painel Administrativo",
         "/perfil": "Perfil",
         "/calendario": "Calendário de Atividades",
-        "/atividades": "Atividades"
+        "/atividades": "Atividades",
+        "/tags": "Tags"
     }
 
     return (

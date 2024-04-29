@@ -40,9 +40,21 @@ const getDiferencaEmHoras = (dataInicio, dataFim) => {
     return (diferenca / 1000 / 60 / 60); // ms -> s -> min -> h
 }
 
+/**
+ * Função para obter o timestamp local
+ * @param {string} timeZone
+ * @returns {number}
+ */
+function getLocalTimestamp(timeZone = 'America/Sao_Paulo') {
+    const now = new Date();
+    const localTime = new Date(now.toLocaleString('en-US', { timeZone }));
+    return localTime.getTime();
+}
+
 
 module.exports = {
     validarData,
     addTempoDeDuracao,
-    getDiferencaEmHoras
+    getDiferencaEmHoras,
+    getLocalTimestamp
 };

@@ -7,7 +7,7 @@ const getTarefaPorId = require("./getTarefaPorId");
  * @param {Object} alteracoes
  * @returns {*}
  */
-const alterarTarefa = async (tarefa_id, alteracoes) => {
+const alterarTarefa = async (tarefa_id, alteracoes, tags) => {
     try {
         await TarefaModel.update(alteracoes, {
             where: {
